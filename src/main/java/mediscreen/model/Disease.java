@@ -2,11 +2,14 @@ package mediscreen.model;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import mediscreen.dto.DiseaseDTO;
 
 @Entity
 @Table(name = "Disease")
@@ -15,11 +18,19 @@ public class Disease {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(unique = true)
 	private String name;
+
+	public Disease() {
+	}
 
 	public Disease(int id, String name) {
 		this.id = id;
 		this.name = name;
+	}
+
+	public Disease(DiseaseDTO disease) {
+		this.name = disease.getName();
 	}
 
 	public int getId() {
