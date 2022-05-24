@@ -3,6 +3,7 @@ package mediscreen.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,7 @@ import mediscreen.dto.PatientDTO;
 import mediscreen.service.patient.PatientService;
 
 @RestController
-public class MediscreenController {
+public class PatientController {
 
 	@Autowired
 	PatientService patientService;
@@ -24,15 +25,14 @@ public class MediscreenController {
 		return patientDTO.getFamily() + " " + patientDTO.getGiven() + " added";
 	}
 
-	@GetMapping("/getPatient/{id}")
+	@GetMapping("/getPatient")
 	public PatientDTO getPatient(@RequestParam int id) {
-		return patientService.getPerson(id);
-
+		return new PatientDTO(patientService.getPatient(id));
 	}
 
-	@GetMapping("/patient/test")
-	public String test() {
-		return "test";
+	@DeleteMapping("/deletePatient")
+	public void deletePatient(@RequestParam int id) {
+		patientService.deletePatient(id);
 	}
 
 }

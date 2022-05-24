@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import mediscreen.dto.PatientHistoryDTO;
+
 @Entity
 @Table(name = "PatientHistory")
 public class PatientHistory {
@@ -29,6 +31,11 @@ public class PatientHistory {
 	private Patient patient;
 
 	public PatientHistory() {
+	}
+
+	public PatientHistory(PatientHistoryDTO patientDTO) {
+		this.medicalHistories = patientDTO.getMedicalHistories();
+		this.note = patientDTO.getNote();
 	}
 
 	public PatientHistory(int id, List<MedicalHistory> medicalHistories, String note) {

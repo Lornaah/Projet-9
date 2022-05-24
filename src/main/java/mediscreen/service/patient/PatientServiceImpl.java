@@ -1,7 +1,11 @@
 package mediscreen.service.patient;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import mediscreen.dto.PatientDTO;
 import mediscreen.model.Patient;
@@ -25,7 +29,16 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public PatientDTO getPerson(int id) {
-		return new PatientDTO(patientRepository.getReferenceById(id));
+	public Patient getPatient(int id) {
+		Optional<Patient> patient = patientRepository.findById(id);
+		if (patient.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found" + id);
+		return patient.get();
+	}
+
+	@Override
+	public void deletePatient(int id) {
+		Patient patient = getPatient(id);
+		patientRepository.delete(patient);
 	}
 }
