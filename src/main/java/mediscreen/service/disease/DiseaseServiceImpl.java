@@ -38,13 +38,14 @@ public class DiseaseServiceImpl implements DiseaseService {
 	}
 
 	@Override
-	public DiseaseDTO addDisease(String diseaseName) {
+	public void addDisease(String diseaseName) {
 		if (diseaseRepository.findByName(diseaseName).isEmpty()) {
 			DiseaseDTO disease = new DiseaseDTO(diseaseName);
 			diseaseRepository.save(new Disease(disease));
-		}
-		Disease disease = diseaseRepository.findByName(diseaseName).get();
-		return new DiseaseDTO(disease);
+		} else
+			throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
+					"The Disease : " + diseaseName + " already exists ");
+
 	}
 
 	@Override
@@ -52,7 +53,8 @@ public class DiseaseServiceImpl implements DiseaseService {
 		Optional<Disease> disease = diseaseRepository.findById(id);
 		if (disease.isPresent())
 			diseaseRepository.deleteById(id);
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Disease with id : " + id + " not found ");
+		else
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Disease with id : " + id + " not found ");
 	}
 
 }

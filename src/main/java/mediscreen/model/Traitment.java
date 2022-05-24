@@ -2,10 +2,13 @@ package mediscreen.model;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import mediscreen.dto.TraitmentDTO;
 
 @Entity
 public class Traitment {
@@ -13,7 +16,7 @@ public class Traitment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
+	@Column(unique = true)
 	private String name;
 	private String posology;
 
@@ -29,6 +32,11 @@ public class Traitment {
 	public Traitment(String name, String posology) {
 		this.name = name;
 		this.posology = posology;
+	}
+
+	public Traitment(TraitmentDTO traitmentDTO) {
+		this.name = traitmentDTO.getName();
+		this.posology = traitmentDTO.getPosology();
 	}
 
 	public int getId() {

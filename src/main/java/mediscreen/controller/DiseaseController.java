@@ -29,8 +29,8 @@ public class DiseaseController {
 	}
 
 	@PostMapping("/addDisease")
-	public DiseaseDTO addDisease(@RequestParam String disease) {
-		return diseaseService.addDisease(disease);
+	public void addDisease(@RequestParam String disease) {
+		diseaseService.addDisease(disease);
 	}
 
 	@DeleteMapping("deleteDisease")

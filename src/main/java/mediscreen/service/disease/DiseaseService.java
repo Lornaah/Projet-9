@@ -10,7 +10,7 @@ public interface DiseaseService {
 
 	DiseaseDTO getDisease(int id);
 
-	DiseaseDTO addDisease(String disease);
+	void addDisease(String disease);
 
 	void deleteDisease(int id);
 
