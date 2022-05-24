@@ -39,8 +39,8 @@ public class PatientDTO {
 	}
 
 	public PatientDTO(Patient patient) {
-		this.family = patient.getFirstName();
-		this.given = patient.getGiven();
+		this.family = patient.getLastName();
+		this.given = patient.getFirstName();
 		this.dob = patient.getBirthDate();
 		this.sex = patient.getGender().getAbbreviation();
 		this.address = patient.getAddress();

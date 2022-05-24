@@ -1,11 +1,17 @@
 package mediscreen.model;
 
 import java.util.Date;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import mediscreen.dto.PatientDTO;
@@ -17,19 +23,24 @@ public class Patient {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
 	private String lastName;
 	private String firstName;
-	private String given;
 	private Date birthDate;
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	private String address;
 	private String phoneNumber;
+
+	@OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private PatientHistory patientHistory;
 
 	public Patient() {
 	}
 
 	public Patient(int id, String lastName, String firstName, Date birthDate, Gender gender, String address,
-			String phoneNumber, String given) {
+			String phoneNumber, PatientHistory patientHistory) {
 		this.id = id;
 		this.lastName = lastName;
 		this.firstName = firstName;
@@ -37,14 +48,24 @@ public class Patient {
 		this.gender = gender;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.given = given;
+		this.patientHistory = patientHistory;
 	}
 
 	public Patient(PatientDTO patientDTO) {
 		this.lastName = patientDTO.getFamily();
+		this.firstName = patientDTO.getGiven();
 		this.birthDate = patientDTO.getDob();
 		this.gender = Gender.fromAbbreviation(patientDTO.getSex());
 		this.address = patientDTO.getAddress();
+		this.phoneNumber = patientDTO.getPhone();
+	}
+
+	public PatientHistory getPatientHistory() {
+		return patientHistory;
+	}
+
+	public void setPatientHistory(PatientHistory patientHistory) {
+		this.patientHistory = patientHistory;
 	}
 
 	public int getId() {
@@ -53,14 +74,6 @@ public class Patient {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getGiven() {
-		return given;
-	}
-
-	public void setGiven(String given) {
-		this.given = given;
 	}
 
 	public String getLastName() {
@@ -109,6 +122,38 @@ public class Patient {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(address, birthDate, firstName, gender, id, lastName, patientHistory, phoneNumber);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Patient other = (Patient) obj;
+		return Objects.equals(address, other.address) && Objects.equals(birthDate, other.birthDate)
+				&& Objects.equals(firstName, other.firstName) && gender == other.gender && id == other.id
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(patientHistory, other.patientHistory)
+				&& Objects.equals(phoneNumber, other.phoneNumber);
+	}
+
+	public Patient(int id, String lastName, String firstName, String given, Date birthDate, Gender gender,
+			String address, String phoneNumber, PatientHistory patientHistory) {
+		this.id = id;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.birthDate = birthDate;
+		this.gender = gender;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.patientHistory = patientHistory;
 	};
 
 }

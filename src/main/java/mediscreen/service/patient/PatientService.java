@@ -1,10 +1,10 @@
-package mediscreen.service;
+package mediscreen.service.patient;
 
 import mediscreen.dto.PatientDTO;
 
 public interface PatientService {
 
-	void addPerson(PatientDTO patientDto);
+	void addPatient(PatientDTO patientDto);
 
 	PatientDTO getPerson(int id);
 }
