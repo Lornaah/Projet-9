@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -38,12 +40,11 @@ public class TraitmentServiceImpl implements TraitmentService {
 	}
 
 	@Override
-	public void addTraitment(TraitmentDTO traitmentDTO) {
+	public void addTraitment(@Valid TraitmentDTO traitmentDTO) {
 		if (traitmentRepository.findByName(traitmentDTO.getName()).isEmpty()) {
 			traitmentRepository.save(new Traitment(traitmentDTO));
 		} else
 			throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, traitmentDTO.getName() + " already exists");
-
 	}
 
 	@Override

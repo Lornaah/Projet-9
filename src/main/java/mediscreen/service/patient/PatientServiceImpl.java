@@ -1,5 +1,7 @@
 package mediscreen.service.patient;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import mediscreen.dto.PatientDTO;
 import mediscreen.model.Patient;
 import mediscreen.repository.PatientRepository;
-import mediscreen.service.patienthistory.PatientHistoryService;
+import mediscreen.service.patient_history.PatientHistoryService;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -40,5 +42,16 @@ public class PatientServiceImpl implements PatientService {
 	public void deletePatient(int id) {
 		Patient patient = getPatient(id);
 		patientRepository.delete(patient);
+	}
+
+	@Override
+	public List<PatientDTO> getAllPatients() {
+		List<Patient> patients = patientRepository.findAll();
+		List<PatientDTO> patientsDTOList = new ArrayList<>();
+		patients.forEach(p -> {
+			PatientDTO patient = new PatientDTO(p);
+			patientsDTOList.add(patient);
+		});
+		return patientsDTOList;
 	}
 }

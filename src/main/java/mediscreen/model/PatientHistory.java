@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import mediscreen.dto.PatientHistoryDTO;
@@ -20,9 +19,8 @@ public class PatientHistory {
 	@Id
 	private int id;
 
-	@OneToMany
-	@PrimaryKeyJoinColumn
-	private List<MedicalHistory> medicalHistories;
+	@OneToMany(mappedBy = "patientHistory")
+	private List<MedicalAntecedent> medicalAntecedents;
 
 	private String note;
 
@@ -34,18 +32,18 @@ public class PatientHistory {
 	}
 
 	public PatientHistory(PatientHistoryDTO patientDTO) {
-		this.medicalHistories = patientDTO.getMedicalHistories();
+		this.medicalAntecedents = patientDTO.getMedicalAntecedents();
 		this.note = patientDTO.getNote();
 	}
 
-	public PatientHistory(int id, List<MedicalHistory> medicalHistories, String note) {
+	public PatientHistory(int id, List<MedicalAntecedent> medicalAntecedents, String note) {
 		this.id = id;
-		this.medicalHistories = medicalHistories;
+		this.medicalAntecedents = medicalAntecedents;
 		this.note = note;
 	}
 
-	public PatientHistory(List<MedicalHistory> medicalHistories, String note) {
-		this.medicalHistories = medicalHistories;
+	public PatientHistory(List<MedicalAntecedent> medicalAntecedents, String note) {
+		this.medicalAntecedents = medicalAntecedents;
 		this.note = note;
 	}
 
@@ -65,12 +63,12 @@ public class PatientHistory {
 		this.id = id;
 	}
 
-	public List<MedicalHistory> getMedicalHistories() {
-		return medicalHistories;
+	public List<MedicalAntecedent> getMedicalAntecedents() {
+		return medicalAntecedents;
 	}
 
-	public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
-		this.medicalHistories = medicalHistories;
+	public void setMedicalAntecedents(List<MedicalAntecedent> medicalAntecedents) {
+		this.medicalAntecedents = medicalAntecedents;
 	}
 
 	public String getNote() {
@@ -83,7 +81,7 @@ public class PatientHistory {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, medicalHistories, note);
+		return Objects.hash(id, medicalAntecedents, note);
 	}
 
 	@Override
@@ -95,13 +93,13 @@ public class PatientHistory {
 		if (getClass() != obj.getClass())
 			return false;
 		PatientHistory other = (PatientHistory) obj;
-		return id == other.id && Objects.equals(medicalHistories, other.medicalHistories)
+		return id == other.id && Objects.equals(medicalAntecedents, other.medicalAntecedents)
 				&& Objects.equals(note, other.note);
 	}
 
 	@Override
 	public String toString() {
-		return "PatientHistory [id=" + id + ", medicalHistories=" + medicalHistories + ", note=" + note + "]";
+		return "PatientHistory [id=" + id + ", medicalHistories=" + medicalAntecedents + ", note=" + note + "]";
 	}
 
 }

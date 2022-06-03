@@ -1,8 +1,11 @@
 package mediscreen.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +28,19 @@ public class PatientController {
 		return patientDTO.getFamily() + " " + patientDTO.getGiven() + " added";
 	}
 
-	@GetMapping("/getPatient")
+	@CrossOrigin
+	@GetMapping("/patient/get")
 	public PatientDTO getPatient(@RequestParam int id) {
 		return new PatientDTO(patientService.getPatient(id));
 	}
 
-	@DeleteMapping("/deletePatient")
+	@CrossOrigin
+	@GetMapping("/patients")
+	public List<PatientDTO> getAllPatients() {
+		return patientService.getAllPatients();
+	}
+
+	@DeleteMapping("/patient/delete")
 	public void deletePatient(@RequestParam int id) {
 		patientService.deletePatient(id);
 	}

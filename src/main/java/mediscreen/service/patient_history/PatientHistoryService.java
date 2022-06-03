@@ -1,4 +1,4 @@
-package mediscreen.service.patienthistory;
+package mediscreen.service.patient_history;
 
 import mediscreen.model.Patient;
 import mediscreen.model.PatientHistory;

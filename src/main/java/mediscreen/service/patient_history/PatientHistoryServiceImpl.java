@@ -1,4 +1,4 @@
-package mediscreen.service.patienthistory;
+package mediscreen.service.patient_history;
 
 import java.util.Optional;
 

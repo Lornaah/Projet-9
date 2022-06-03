@@ -5,33 +5,33 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
-import mediscreen.model.MedicalHistory;
+import mediscreen.model.MedicalAntecedent;
 import mediscreen.model.PatientHistory;
 
 public class PatientHistoryDTO {
 
 	@NotNull
-	private List<MedicalHistory> medicalHistories;
+	private List<MedicalAntecedent> medicalHistories;
 	private String note;
 
 	public PatientHistoryDTO() {
 	}
 
-	public PatientHistoryDTO(@NotNull List<MedicalHistory> medicalHistories, String note) {
+	public PatientHistoryDTO(@NotNull List<MedicalAntecedent> medicalHistories, String note) {
 		this.medicalHistories = medicalHistories;
 		this.note = note;
 	}
 
 	public PatientHistoryDTO(PatientHistory patientHistory) {
-		this.medicalHistories = patientHistory.getMedicalHistories();
+		this.medicalHistories = patientHistory.getMedicalAntecedents();
 		this.note = patientHistory.getNote();
 	}
 
-	public List<MedicalHistory> getMedicalHistories() {
+	public List<MedicalAntecedent> getMedicalAntecedents() {
 		return medicalHistories;
 	}
 
-	public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
+	public void setMedicalHistories(List<MedicalAntecedent> medicalHistories) {
 		this.medicalHistories = medicalHistories;
 	}
 

@@ -7,14 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import mediscreen.dto.MedicalAntecedentDTO;
+
 @Entity
-@Table(name = "MedicalHistory")
-public class MedicalHistory {
+@Table(name = "MedicalAntecedent")
+public class MedicalAntecedent {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,21 +29,34 @@ public class MedicalHistory {
 	private List<Traitment> traitments;
 
 	@ManyToOne
-	@MapsId
+	@JoinColumn(name = "patient_id", nullable = false)
 	private PatientHistory patientHistory;
 
-	public MedicalHistory() {
+	public MedicalAntecedent() {
 	}
 
-	public MedicalHistory(Disease disease, List<Traitment> traitments) {
+	public MedicalAntecedent(MedicalAntecedentDTO medicalAntecedentDTO) {
+		this.disease = medicalAntecedentDTO.getDisease();
+		this.traitments = medicalAntecedentDTO.getTraitments();
+	}
+
+	public MedicalAntecedent(Disease disease, List<Traitment> traitments) {
 		this.disease = disease;
 		this.traitments = traitments;
 	}
 
-	public MedicalHistory(int id, Disease disease, List<Traitment> traitments) {
+	public MedicalAntecedent(int id, Disease disease, List<Traitment> traitments) {
 		this.id = id;
 		this.disease = disease;
 		this.traitments = traitments;
+	}
+
+	public PatientHistory getPatientHistory() {
+		return patientHistory;
+	}
+
+	public void setPatientHistory(PatientHistory patientHistory) {
+		this.patientHistory = patientHistory;
 	}
 
 	public int getId() {
@@ -81,7 +96,7 @@ public class MedicalHistory {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MedicalHistory other = (MedicalHistory) obj;
+		MedicalAntecedent other = (MedicalAntecedent) obj;
 		return Objects.equals(disease, other.disease) && id == other.id && Objects.equals(traitments, other.traitments);
 	}
 

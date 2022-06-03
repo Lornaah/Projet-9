@@ -12,6 +12,7 @@ import mediscreen.model.Patient;
 
 public class PatientDTO {
 
+	private int id;
 	@NotNull
 	private String family;
 	@NotNull
@@ -29,7 +30,8 @@ public class PatientDTO {
 	public PatientDTO() {
 	}
 
-	public PatientDTO(String family, String given, Date dob, String sex, String address, String phone) {
+	public PatientDTO(String family, String given, Date dob, String sex, String address, String phone, int id) {
+		this.id = id;
 		this.family = family;
 		this.given = given;
 		this.dob = dob;
@@ -39,12 +41,25 @@ public class PatientDTO {
 	}
 
 	public PatientDTO(Patient patient) {
+		this.id = patient.getId();
 		this.family = patient.getLastName();
 		this.given = patient.getFirstName();
 		this.dob = patient.getBirthDate();
 		this.sex = patient.getGender().getAbbreviation();
 		this.address = patient.getAddress();
 		this.phone = patient.getPhoneNumber();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 
 	public String getFamily() {
@@ -73,10 +88,6 @@ public class PatientDTO {
 
 	public String getSex() {
 		return sex;
-	}
-
-	public void setGender(String sex) {
-		this.sex = sex;
 	}
 
 	public String getAddress() {
