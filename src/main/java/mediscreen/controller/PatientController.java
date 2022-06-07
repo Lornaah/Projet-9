@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,10 +23,10 @@ public class PatientController {
 	@Autowired
 	PatientService patientService;
 
+	@CrossOrigin
 	@PostMapping("/patient/add")
-	public String addPatient(@RequestBody @Valid PatientDTO patientDTO) {
-		patientService.addPatient(patientDTO);
-		return patientDTO.getFamily() + " " + patientDTO.getGiven() + " added";
+	public PatientDTO addPatient(@RequestBody @Valid PatientDTO patientDTO) {
+		return patientService.addPatient(patientDTO);
 	}
 
 	@CrossOrigin
@@ -40,6 +41,13 @@ public class PatientController {
 		return patientService.getAllPatients();
 	}
 
+	@CrossOrigin
+	@PutMapping("/patient/update")
+	public PatientDTO updatePatient(@RequestParam int id, @RequestBody @Valid PatientDTO patientDTO) {
+		return patientService.updatePatient(id, patientDTO);
+	}
+
+	@CrossOrigin
 	@DeleteMapping("/patient/delete")
 	public void deletePatient(@RequestParam int id) {
 		patientService.deletePatient(id);

@@ -7,11 +7,13 @@ import mediscreen.model.Patient;
 
 public interface PatientService {
 
-	void addPatient(PatientDTO patientDto);
+	PatientDTO addPatient(PatientDTO patientDto);
 
 	Patient getPatient(int id);
 
 	void deletePatient(int id);
 
 	List<PatientDTO> getAllPatients();
+
+	PatientDTO updatePatient(int id, PatientDTO patientDTO);
 }

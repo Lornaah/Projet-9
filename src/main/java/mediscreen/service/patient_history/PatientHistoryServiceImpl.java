@@ -48,4 +48,10 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
 		patientHistoryRepository.save(patientHistory);
 	}
 
+	@Override
+	public void deletePatientHistory(int id) {
+		PatientHistory patientHistory = getPatientHistory(id);
+		patientHistoryRepository.delete(patientHistory);
+	}
+
 }

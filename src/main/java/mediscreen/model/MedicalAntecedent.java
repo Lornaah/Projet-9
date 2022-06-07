@@ -3,6 +3,7 @@ package mediscreen.model;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,7 @@ public class MedicalAntecedent {
 	@OneToMany
 	private List<Traitment> traitments;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "patient_id", nullable = false)
 	private PatientHistory patientHistory;
 

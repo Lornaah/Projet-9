@@ -13,4 +13,6 @@ public interface PatientHistoryService {
 
 	public void deleteNote(int id);
 
+	public void deletePatientHistory(int id);
+
 }

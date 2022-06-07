@@ -3,6 +3,7 @@ package mediscreen.model;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.MapsId;
@@ -19,7 +20,7 @@ public class PatientHistory {
 	@Id
 	private int id;
 
-	@OneToMany(mappedBy = "patientHistory")
+	@OneToMany(mappedBy = "patientHistory", cascade = CascadeType.ALL)
 	private List<MedicalAntecedent> medicalAntecedents;
 
 	private String note;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,10 +26,11 @@ public class PatientServiceImpl implements PatientService {
 	private PatientHistoryService patientHistoryService;
 
 	@Override
-	public void addPatient(PatientDTO patientDto) {
+	public PatientDTO addPatient(PatientDTO patientDto) {
 		Patient patient = new Patient(patientDto);
 		patient.setPatientHistory(patientHistoryService.addPatientHistory(patient));
-		patientRepository.save(patient);
+		return new PatientDTO(patientRepository.save(patient));
+
 	}
 
 	@Override
@@ -41,6 +44,7 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public void deletePatient(int id) {
 		Patient patient = getPatient(id);
+		patientHistoryService.deletePatientHistory(id);
 		patientRepository.delete(patient);
 	}
 
@@ -53,5 +57,14 @@ public class PatientServiceImpl implements PatientService {
 			patientsDTOList.add(patient);
 		});
 		return patientsDTOList;
+	}
+
+	@Override
+	@Transactional
+	public PatientDTO updatePatient(int id, PatientDTO patientDTO) {
+		Patient patient = getPatient(id);
+		Patient newPatient = new Patient(patientDTO);
+		newPatient.setId(patient.getId());
+		return new PatientDTO(patientRepository.save(newPatient));
 	}
 }
