@@ -32,7 +32,7 @@ public class PatientController {
 	@CrossOrigin
 	@GetMapping("/patient/get")
 	public PatientDTO getPatient(@RequestParam int id) {
-		return new PatientDTO(patientService.getPatient(id));
+		return patientService.getPatient(id);
 	}
 
 	@CrossOrigin
@@ -51,6 +51,12 @@ public class PatientController {
 	@DeleteMapping("/patient/delete")
 	public void deletePatient(@RequestParam int id) {
 		patientService.deletePatient(id);
+	}
+
+	@CrossOrigin
+	@GetMapping("/generateReport")
+	public String generateDiabetesReport(@RequestParam int patId, int occurrences) {
+		return patientService.generateDiabetesReport(patId, occurrences);
 	}
 
 }

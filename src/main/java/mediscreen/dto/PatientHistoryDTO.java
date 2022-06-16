@@ -12,19 +12,16 @@ public class PatientHistoryDTO {
 
 	@NotNull
 	private List<MedicalAntecedent> medicalHistories;
-	private String note;
 
 	public PatientHistoryDTO() {
 	}
 
 	public PatientHistoryDTO(@NotNull List<MedicalAntecedent> medicalHistories, String note) {
 		this.medicalHistories = medicalHistories;
-		this.note = note;
 	}
 
 	public PatientHistoryDTO(PatientHistory patientHistory) {
 		this.medicalHistories = patientHistory.getMedicalAntecedents();
-		this.note = patientHistory.getNote();
 	}
 
 	public List<MedicalAntecedent> getMedicalAntecedents() {
@@ -35,17 +32,9 @@ public class PatientHistoryDTO {
 		this.medicalHistories = medicalHistories;
 	}
 
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(medicalHistories, note);
+		return Objects.hash(medicalHistories);
 	}
 
 	@Override
@@ -57,12 +46,12 @@ public class PatientHistoryDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		PatientHistoryDTO other = (PatientHistoryDTO) obj;
-		return Objects.equals(medicalHistories, other.medicalHistories) && Objects.equals(note, other.note);
+		return Objects.equals(medicalHistories, other.medicalHistories);
 	}
 
 	@Override
 	public String toString() {
-		return "PatientHistoryDTO [medicalHistories=" + medicalHistories + ", note=" + note + "]";
+		return "PatientHistoryDTO [medicalHistories=" + medicalHistories + "]";
 	}
 
 }

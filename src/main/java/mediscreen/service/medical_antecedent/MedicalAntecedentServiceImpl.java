@@ -48,7 +48,7 @@ public class MedicalAntecedentServiceImpl implements MedicalAntecedentService {
 
 	@Override
 	public void addMedicalAntecedent(int id, @Valid MedicalAntecedentDTO medicalAntecedentDTO) {
-		Patient patient = patientService.getPatient(id);
+		Patient patient = new Patient(patientService.getPatient(id));
 		MedicalAntecedent antecedent = new MedicalAntecedent(medicalAntecedentDTO);
 		antecedent.setPatientHistory(patient.getPatientHistory());
 		antecedentRepository.save(antecedent);

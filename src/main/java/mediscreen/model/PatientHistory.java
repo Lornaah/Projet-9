@@ -23,8 +23,6 @@ public class PatientHistory {
 	@OneToMany(mappedBy = "patientHistory", cascade = CascadeType.ALL)
 	private List<MedicalAntecedent> medicalAntecedents;
 
-	private String note;
-
 	@OneToOne
 	@MapsId
 	private Patient patient;
@@ -34,18 +32,15 @@ public class PatientHistory {
 
 	public PatientHistory(PatientHistoryDTO patientDTO) {
 		this.medicalAntecedents = patientDTO.getMedicalAntecedents();
-		this.note = patientDTO.getNote();
 	}
 
 	public PatientHistory(int id, List<MedicalAntecedent> medicalAntecedents, String note) {
 		this.id = id;
 		this.medicalAntecedents = medicalAntecedents;
-		this.note = note;
 	}
 
 	public PatientHistory(List<MedicalAntecedent> medicalAntecedents, String note) {
 		this.medicalAntecedents = medicalAntecedents;
-		this.note = note;
 	}
 
 	public Patient getPatient() {
@@ -72,17 +67,9 @@ public class PatientHistory {
 		this.medicalAntecedents = medicalAntecedents;
 	}
 
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, medicalAntecedents, note);
+		return Objects.hash(id, medicalAntecedents, patient);
 	}
 
 	@Override
@@ -95,12 +82,12 @@ public class PatientHistory {
 			return false;
 		PatientHistory other = (PatientHistory) obj;
 		return id == other.id && Objects.equals(medicalAntecedents, other.medicalAntecedents)
-				&& Objects.equals(note, other.note);
+				&& Objects.equals(patient, other.patient);
 	}
 
 	@Override
 	public String toString() {
-		return "PatientHistory [id=" + id + ", medicalHistories=" + medicalAntecedents + ", note=" + note + "]";
+		return "PatientHistory [id=" + id + ", medicalAntecedents=" + medicalAntecedents + ", patient=" + patient + "]";
 	}
 
 }

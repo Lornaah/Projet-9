@@ -9,10 +9,6 @@ public interface PatientHistoryService {
 
 	public PatientHistory getPatientHistory(int id);
 
-	public void setNote(int id, String note);
-
-	public void deleteNote(int id);
-
 	public void deletePatientHistory(int id);
 
 }

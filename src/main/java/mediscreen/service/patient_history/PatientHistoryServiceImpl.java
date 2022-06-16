@@ -26,26 +26,12 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
 	}
 
 	@Override
-	public void setNote(int id, String note) {
-		PatientHistory patientHistory = getPatientHistory(id);
-		patientHistory.setNote(note);
-		patientHistoryRepository.save(patientHistory);
-	}
-
-	@Override
 	public PatientHistory getPatientHistory(int id) {
 		Optional<PatientHistory> patientHistory = patientHistoryRepository.findById(id);
 		if (patientHistory.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient History not found " + id);
 		return patientHistory.get();
 
-	}
-
-	@Override
-	public void deleteNote(int id) {
-		PatientHistory patientHistory = getPatientHistory(id);
-		patientHistory.setNote("");
-		patientHistoryRepository.save(patientHistory);
 	}
 
 	@Override
