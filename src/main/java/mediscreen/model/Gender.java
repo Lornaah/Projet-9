@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum Gender {
 
-	MALE("Male", "M"), FEMALE("Female", "F"), UNDEFINED("Undefined", "N/A");
+	MALE("Male", "M"), FEMALE("Female", "F");
 
 	private String name;
 	private String abbreviation;
@@ -23,7 +23,7 @@ public enum Gender {
 	}
 
 	public static Gender fromAbbreviation(String sex) {
-		return Arrays.stream(values()).filter(g -> sex.equals(g.abbreviation)).findFirst().orElse(UNDEFINED);
+		return Arrays.stream(values()).filter(g -> sex.equals(g.abbreviation)).findFirst().orElse(MALE);
 	}
 
 }

@@ -3,15 +3,12 @@ package mediscreen.model;
 import java.util.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import mediscreen.dto.PatientDTO;
@@ -32,15 +29,11 @@ public class Patient {
 	private String address;
 	private String phoneNumber;
 
-	@OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	private PatientHistory patientHistory;
-
 	public Patient() {
 	}
 
 	public Patient(int id, String lastName, String firstName, Date birthDate, Gender gender, String address,
-			String phoneNumber, PatientHistory patientHistory) {
+			String phoneNumber) {
 		this.id = id;
 		this.lastName = lastName;
 		this.firstName = firstName;
@@ -48,24 +41,16 @@ public class Patient {
 		this.gender = gender;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.patientHistory = patientHistory;
 	}
 
 	public Patient(PatientDTO patientDTO) {
+		this.id = patientDTO.getId();
 		this.lastName = patientDTO.getFamily();
 		this.firstName = patientDTO.getGiven();
 		this.birthDate = patientDTO.getDob();
 		this.gender = Gender.fromAbbreviation(patientDTO.getSex());
 		this.address = patientDTO.getAddress();
 		this.phoneNumber = patientDTO.getPhone();
-	}
-
-	public PatientHistory getPatientHistory() {
-		return patientHistory;
-	}
-
-	public void setPatientHistory(PatientHistory patientHistory) {
-		this.patientHistory = patientHistory;
 	}
 
 	public int getId() {
@@ -126,7 +111,7 @@ public class Patient {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(address, birthDate, firstName, gender, id, lastName, patientHistory, phoneNumber);
+		return Objects.hash(address, birthDate, firstName, gender, id, lastName, phoneNumber);
 	}
 
 	@Override
@@ -140,20 +125,7 @@ public class Patient {
 		Patient other = (Patient) obj;
 		return Objects.equals(address, other.address) && Objects.equals(birthDate, other.birthDate)
 				&& Objects.equals(firstName, other.firstName) && gender == other.gender && id == other.id
-				&& Objects.equals(lastName, other.lastName) && Objects.equals(patientHistory, other.patientHistory)
-				&& Objects.equals(phoneNumber, other.phoneNumber);
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(phoneNumber, other.phoneNumber);
 	}
-
-	public Patient(int id, String lastName, String firstName, String given, Date birthDate, Gender gender,
-			String address, String phoneNumber, PatientHistory patientHistory) {
-		this.id = id;
-		this.lastName = lastName;
-		this.firstName = firstName;
-		this.birthDate = birthDate;
-		this.gender = gender;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.patientHistory = patientHistory;
-	};
 
 }

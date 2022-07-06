@@ -1,5 +1,6 @@
 package mediscreen.dto;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
@@ -108,7 +109,7 @@ public class PatientDTO {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(address, dob, family, sex, given, phone);
+		return Objects.hash(address, dob, family, given, id, phone, sex);
 	}
 
 	@Override
@@ -120,8 +121,17 @@ public class PatientDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		PatientDTO other = (PatientDTO) obj;
-		return Objects.equals(address, other.address) && Objects.equals(dob, other.dob)
-				&& Objects.equals(family, other.family) && sex == other.sex && Objects.equals(given, other.given)
-				&& Objects.equals(phone, other.phone);
+		return Objects.equals(address, other.address)
+				&& Objects.equals(dob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+						other.dob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+				&& Objects.equals(family, other.family) && Objects.equals(given, other.given) && id == other.id
+				&& Objects.equals(phone, other.phone) && Objects.equals(sex, other.sex);
 	}
+
+	@Override
+	public String toString() {
+		return "PatientDTO [id=" + id + ", family=" + family + ", given=" + given + ", dob=" + dob + ", sex=" + sex
+				+ ", address=" + address + ", phone=" + phone + "]";
+	}
+
 }

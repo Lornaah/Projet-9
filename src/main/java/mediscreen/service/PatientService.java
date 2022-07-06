@@ -1,4 +1,4 @@
-package mediscreen.service.patient;
+package mediscreen.service;
 
 import java.util.List;
 
@@ -16,5 +16,4 @@ public interface PatientService {
 
 	PatientDTO updatePatient(int id, PatientDTO patientDTO);
 
-	String generateDiabetesReport(int patientId, int occurrences);
 }
