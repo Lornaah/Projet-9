@@ -2,6 +2,7 @@ package mediscreen;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -116,6 +117,20 @@ public class ControllerTest {
 
 		assertTrue(patientDTOresult.getFamily().equals(newPatientDTO.getFamily()));
 		assertTrue(patientDTOresult.getGiven().equals(newPatientDTO.getGiven()));
+
+	}
+
+	@Test
+	public void patientDeleteTest() throws Exception {
+		PatientDTO patientDTO = new PatientDTO("family", "given", new Date(), "M", "address", "phone", 1);
+		PatientDTO patientDTOcreated = service.addPatient(patientDTO);
+
+		mockMvc.perform(delete("/patient/delete").contentType(MediaType.APPLICATION_JSON).param("id",
+				String.valueOf(patientDTOcreated.getId()))).andExpect(status().isOk()).andReturn();
+
+		List<PatientDTO> patientList = service.getAllPatients();
+
+		assertTrue(patientList.isEmpty());
 
 	}
 
